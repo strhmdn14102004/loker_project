@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:satset/module/home/home_bloc.dart';
@@ -18,11 +20,38 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   TextEditingController searchController = TextEditingController();
   bool showPassword = false; // to track password visibility
-
+ late PageController _pageController;
+  int _currentPageIndex = 0;
   @override
   void initState() {
     super.initState();
+      _initPageController();
+    _startAutoSlide();
   }
+   @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  void _initPageController() {
+    _pageController = PageController(
+      initialPage: _currentPageIndex,
+      viewportFraction: 0.85, // Adjust as needed
+    );
+  }
+
+  void _startAutoSlide() {
+    Timer.periodic(Duration(seconds: 3), (timer) {
+      _currentPageIndex = (_currentPageIndex + 1) % 3;
+      _pageController.animateToPage(
+        _currentPageIndex,
+        duration: Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -120,16 +149,17 @@ class HomePageState extends State<HomePage> {
                     SizedBox(height: 20),
                     // Row of Images with Reduced Spacing
                     Container(
-                      height: 130,
-                      child: PageView.builder(
-                        itemCount: 3,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 8),
-                            child: Image.asset(
-                              "assets/images/sample.png",
-                              fit: BoxFit.fill,
-                            ),
+                height: 130,
+                child: PageView.builder(
+                  controller: _pageController,
+                  itemCount: 3,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 8),
+                      child: Image.asset(
+                        "assets/images/sample.png",
+                        fit: BoxFit.fill,
+                      ),
                           );
                         },
                       ),
@@ -146,14 +176,14 @@ class HomePageState extends State<HomePage> {
                       ),
                       Row(
                         children: [
-                          Container(width: 175, child: CompanyCard("sasat")),
-                          Container(width: 175, child: CompanyCard("Satset")),
+                          Container(width: 175, child: CompanyCard("Sutsat")),
+                          Container(width: 175, child: CompanyCard("Seset")),
                         ],
                       ),
                       Row(
                         children: [
-                          Container(width: 175, child: CompanyCard("sasat")),
-                          Container(width: 175, child: CompanyCard("Satset")),
+                          Container(width: 175, child: CompanyCard("Seune")),
+                          Container(width: 175, child: CompanyCard("Sero")),
                         ],
                       )
                     ]),

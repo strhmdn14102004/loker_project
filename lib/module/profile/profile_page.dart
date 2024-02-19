@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:satset/module/infodevice.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:satset/module/login/login_page.dart';
 import 'package:satset/module/profile/profile_bloc.dart';
 import 'package:satset/module/profile/profile_state.dart';
 
@@ -38,10 +38,9 @@ class ProfilePageState extends State<ProfilePage> {
           child: Column(
             children: [
               Container(
-                margin: EdgeInsets.only(top: 50, left: 20),
-                child: Center(
-                  child: Column(
-                    children: [
+                  margin: EdgeInsets.only(top: 50, left: 20),
+                  child: Center(
+                    child: Column(children: [
                       Row(
                         children: [
                           IconButton(
@@ -295,14 +294,59 @@ class ProfilePageState extends State<ProfilePage> {
                           fontSize: 15,
                         ),
                       ),
+                     
                       SizedBox(
                         height: 20,
                       ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+                    SizedBox(
+                        height: 30,
+                      ),
+                      Container(
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.only(right: 20, left: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              width: 138,
+                              height: 50,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LoginPage(),
+                          ),
+                        );
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      Theme.of(context).brightness ==
+                                              Brightness.dark
+                                          ? Colors.white
+                                          : Colors.black,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                ),
+                                child: Text(
+                                  "Logout",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Theme.of(context).brightness ==
+                                            Brightness.dark
+                                        ? Colors.black
+                                        : Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+             ] ))
+           ) ],
           ),
         ),
       ),

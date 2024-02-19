@@ -214,13 +214,17 @@ class _InfoDeviceState extends State<InfoDevice> {
     };
   }
 
-  @override
+   @override
   Widget build(BuildContext context) {
+    final brightness = MediaQuery.of(context).platformBrightness;
+    final isDarkMode = brightness == Brightness.dark;
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
         colorSchemeSeed: const Color(0x9f4376f8),
+        brightness: isDarkMode ? Brightness.dark : Brightness.light,
       ),
       home: Scaffold(
         appBar: AppBar(
@@ -228,7 +232,7 @@ class _InfoDeviceState extends State<InfoDevice> {
           centerTitle: true,
           elevation: 4,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back,color: Colors.grey,),
+            icon: Icon(Icons.arrow_back, color: Colors.grey),
             onPressed: () {
               Navigator.of(context).pop(); // Navigate back
             },
@@ -242,7 +246,10 @@ class _InfoDeviceState extends State<InfoDevice> {
                   Container(
                     padding: const EdgeInsets.all(10),
                     child: Container(
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                       
+                      ),
                       child: Text(
                         property,
                         style: const TextStyle(
